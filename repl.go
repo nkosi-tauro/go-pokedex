@@ -8,7 +8,7 @@ import (
 )
 
 // StartRepl starts the REPL (Read-Eval-Print-Loop)
-func startRepl() {
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Enter text: ")
@@ -30,7 +30,7 @@ func startRepl() {
 			fmt.Println("Invalid Command")
 			continue
 		}
-		command.callback()		
+		command.callback(cfg)		
 	}
 
 }
@@ -38,7 +38,7 @@ func startRepl() {
 type cliCommand struct {
 	name string
 	description string
-	callback func() error
+	callback func(*config) error
 }
 
 

@@ -3,14 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
-
-	"github.com/nkosi-tauro/go-pokedex/pokeapi"
 )
 
-func callbackMap() error {
-	pokeapiCLient := pokeapi.NewClient()
+func callbackMap(cfg *config) error {
 
-	resp, err := pokeapiCLient.ListLocationAreas()
+	resp, err := cfg.pokeapiClient.ListLocationAreas()
 	if err != nil {
 		log.Fatal(err)
 	}
