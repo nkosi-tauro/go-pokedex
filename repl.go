@@ -54,6 +54,11 @@ func getCommands() map[string]cliCommand {
 			description: "Exits the program",
 			callback: callbackExit,
 		},
+		"map": {
+			name: "map",
+			description: "Lists all location areas",
+			callback: callbackMap,
+		},
 	}
 }
 
