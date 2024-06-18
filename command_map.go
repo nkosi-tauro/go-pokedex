@@ -3,13 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
-	"log"
 )
 
 func callbackMap(cfg *config) error {
 	resp, err := cfg.pokeapiClient.ListLocationAreas(cfg.nextLocationURL)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	fmt.Println("Location areas: ")
@@ -29,7 +28,7 @@ func callbackMapBack(cfg *config) error {
 	}
 	resp, err := cfg.pokeapiClient.ListLocationAreas(cfg.previousLocationURL)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	fmt.Println("Location areas: ")
