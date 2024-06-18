@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
 )
 
 // StartRepl starts the REPL (Read-Eval-Print-Loop)
@@ -17,20 +18,26 @@ func startRepl(cfg *config) {
 		text := scanner.Text()
 
 		cleaned := cleanInput(text)
+		var queryStr string;
 		// If nothing was entered, continue the loop
 		if len(cleaned) == 0 {
 			continue
 		}
+
+		// If there is more than one word, the second word is the query string
+		if len(cleaned) > 1 {
+			queryStr = cleaned[1]
+		}
 		//The first inputed word is the command
 		commandName := cleaned[0]
-
+		
 		availableCommands := getCommands()
 		command, ok := availableCommands[commandName]
 		if !ok {
 			fmt.Println("Invalid Command")
 			continue
 		}
-		err := command.callback(cfg)		
+		err := command.callback(cfg, queryStr)		
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -41,7 +48,7 @@ func startRepl(cfg *config) {
 type cliCommand struct {
 	name string
 	description string
-	callback func(*config) error
+	callback func(*config, string) error
 }
 
 
@@ -66,6 +73,11 @@ func getCommands() map[string]cliCommand {
 			name: "mapb",
 			description: "Lists all previous location areas",
 			callback: callbackMapBack,
+		},
+		"search": {
+			name: "search",
+			description: "Lists the details of the pokemon with the given name",
+			callback: callbackPokeSearch,
 		},
 	}
 }
